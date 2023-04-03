@@ -1,0 +1,1 @@
+dotnet ef migrations add Initialize_$(Get-Date -Format "ddMMyyyHHmmss") --project   .\Services\Order\MarketPlace.Order.Infrastructure --startup-project .\Services\Order\MarketPlace.Order.API --output-dir  Migrations

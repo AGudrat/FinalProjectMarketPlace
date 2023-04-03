@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<ProductViewModel>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-header">
+                    Products
+                </h5>
+                <a asp-action="Create" asp-controller="Products" class="btn btn-primary mb-3">Product Create</a>
+                @if (Model.Any())
+                {
+                    <table class="tabe table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Şəkil</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> <img style="width:72px" src="@item.StockPictureUrl" class="img-thumbnail" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Category.Name</td>
+                                    <td>
+                                        <a asp-action="Update" asp-controller="Products" asp-route-id="@item.Id" class="btn btn-warning mb-3">Product Update</a>
+                                        <a asp-action="Delete" asp-controller="Products" asp-route-id="@item.Id" class="btn btn-danger mb-3">Product Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-info">Product Not Foundc</div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

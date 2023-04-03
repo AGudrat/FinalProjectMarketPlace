@@ -1,0 +1,1 @@
+dotnet ef database update    --project   .\Services\Order\MarketPlace.Order.Infrastructure --startup-project .\Services\Order\MarketPlace.Order.API

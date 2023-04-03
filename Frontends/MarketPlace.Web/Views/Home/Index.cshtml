@@ -1,0 +1,240 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var count = 0;
+}
+@model List<ProductViewModel>
+
+<section class="hero" id="hero">
+    @Html.Partial("PartialViews/_Hero.cshtml")
+</section>
+<section class="daily__promotions" id="daily__promotions">
+    <div class="daily__promotions__header">
+        <h3 class="daily__promotions__header-text">Daily Promotions</h3>
+    </div>
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            count++;
+            if (count == 1 || (count % 3 == 1))
+            {
+                @Html.Raw("""<div class="row g-4">""")
+            }
+            <div class="col-3">
+                <a asp-route-id="@item.Id" asp-action="Detail" asp-controller="Home" class="product__card">
+                    <div class="product__card__image__container">
+                        <img src="@item.StockPictureUrl" class="product__card__image" />
+                    </div>
+                    <div class="product__card__body">
+                        <h5 class="product__card__title">@item.Name</h5>
+                        <h4 class="product__card__price">$@item.Price</h4>
+                    </div>
+                </a>
+            </div>
+            if (count % 3 == 0)
+            {
+                @Html.Raw("""</div>""")
+
+            }
+        }
+    }
+</section>
+
+
+<section class="quick__categories" id="quick__categories">
+    <div class="quick__categories__header">
+        <h3 class="quick__categories__header-text">Quick Categories</h3>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <a class="category__card">
+                <div class="category__card__image__container">
+                    <img src="https://localhost:5012/photos/2e91ef22-0bab-4844-91f9-abd9ef413062.jpg" class="category__card__image" />
+                </div>
+                <div class="category__card__body">
+                    <h5 class="category__card__title">Technique</h5>
+                    <ul class="category__card__subtitles">
+                        <li>Headphones</li>
+                        <li>Watches</li>
+                        <li>Cables</li>
+                    </ul>
+                    <p class="category__card__all">
+                        <span>View all</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 14 14">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a  class="category__card">
+                <div class="category__card__image__container">
+                    <img src="https://localhost:5012/photos/2e91ef22-0bab-4844-91f9-abd9ef413062.jpg" class="category__card__image" />
+                </div>
+                <div class="category__card__body">
+                    <h5 class="category__card__title">Technique</h5>
+                    <ul class="category__card__subtitles">
+                        <li>Headphones</li>
+                        <li>Watches</li>
+                        <li>Cables</li>
+                    </ul>
+                    <p class="category__card__all">
+                        <span>View all</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 14 14">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a class="category__card">
+                <div class="category__card__image__container">
+                    <img src="https://localhost:5012/photos/2e91ef22-0bab-4844-91f9-abd9ef413062.jpg" class="category__card__image" />
+                </div>
+                <div class="category__card__body">
+                    <h5 class="category__card__title">Technique</h5>
+                    <ul class="category__card__subtitles">
+                        <li>Headphones</li>
+                        <li>Watches</li>
+                        <li>Cables</li>
+                    </ul>
+                    <p class="category__card__all">
+                        <span>View all</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 14 14">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a class="category__card">
+                <div class="category__card__image__container">
+                    <img src="https://localhost:5012/photos/2e91ef22-0bab-4844-91f9-abd9ef413062.jpg" class="category__card__image" />
+                </div>
+                <div class="category__card__body">
+                    <h5 class="category__card__title">Technique</h5>
+                    <ul class="category__card__subtitles">
+                        <li>Headphones</li>
+                        <li>Watches</li>
+                        <li>Cables</li>
+                    </ul>
+                    <p class="category__card__all">
+                        <span>View all</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 14 14">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="recommended" id="recommended">
+    <div class="recommended__header">
+        <h3 class="recommended__header-text">You might like this</h3>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="recommended__card">
+                <div class="recommended__card__body">
+                    <p class="recommended__card__text">Everything for professional photography</p>
+                </div>
+                <div class="recommended__card__image__container">
+                    <img src="~/images/recommended-image/sony.png" class="recommended__card__image" />
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="recommended__card">
+                <div class="recommended__card__body">
+                    <p class="recommended__card__text">Samsung smartphones</p>
+                </div>
+                <div class="recommended__card__image__container">
+                    <img src="~/images/recommended-image/samsung.png" class="recommended__card__image" />
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="recommended__card">
+                <div class="recommended__card__body">
+                    <p class="recommended__card__text">Xiaomi watches</p>
+                </div>
+                <div class="recommended__card__image__container">
+                    <img src="~/images/recommended-image/xiaomi.png" class="recommended__card__image" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cooperate__brands">
+    <div class="cooperate__brands__header">
+        <h3 class="cooperate__brands__header-text">We cooperate with these brandss</h3>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/zara.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/xiaomi.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/PlayStation.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/Tommy_Hilfiger_Logo.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/Samsung_Logo.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/Adidas_Logo.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/msi.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/apple.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/vivo.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/nike.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/ikea.png" />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="cooperate__brand__image__container">
+                <img class="cooperate__brand__image" src="~/images/brands/xbox.png" />
+            </div>
+        </div>
+    </div>
+</section>

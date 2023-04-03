@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MarketPlace.Order.Application": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:60763;http://localhost:60768"
+    }
+  }
+}
