@@ -18,6 +18,40 @@ public class CatalogService : ICatalogService
         _photoHelper = photoHelper;
     }
 
+    public async Task<bool> CreateCategoryAsync(CategoryCreateInput categoryCreateInput)
+    {
+        var photoUrl = await _photoStockService.UploadPhoto(categoryCreateInput.Photo);
+        if (photoUrl != null)
+        {
+            categoryCreateInput.PhotoUrl = photoUrl.Url;
+        }
+        var response = await _httpClient.PostAsJsonAsync<CategoryCreateInput>("categories", categoryCreateInput);
+        return response.IsSuccessStatusCode;
+    }
+    public async Task<CategoryViewModel> GetByIdCategory(string id)
+    {
+        var response = await _httpClient.GetAsync("categories/" + id);
+
+        if (!response.IsSuccessStatusCode)
+            return null;
+        var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CategoryViewModel>>();
+        responseSuccess.Data.PhotoStockUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.PhotoStockUrl);
+        return responseSuccess.Data;
+
+    }
+
+    public async Task<bool> UpdateCategoryAsync(CategoryUpdateInput categoryUpdateInput)
+    {
+        var resultPhotoService = await _photoStockService.UploadPhoto(categoryUpdateInput.Photo);
+
+        if (resultPhotoService != null)
+        {
+            _photoStockService.DeletePhoto(categoryUpdateInput.PhotoUrl);
+            categoryUpdateInput.PhotoUrl = resultPhotoService.Url;
+        }
+        var response = await _httpClient.PutAsJsonAsync<CategoryUpdateInput>("categories", categoryUpdateInput);
+        return response.IsSuccessStatusCode;
+    }
     public async Task<bool> CreateProductAsync(ProductCreateInput productCreateInput)
     {
         var mainPhotoUrl = await _photoStockService.UploadPhoto(productCreateInput.MainPhoto);
@@ -40,7 +74,7 @@ public class CatalogService : ICatalogService
 
     public async Task<bool> DeleteProductAsync(string productId)
     {
-        var response = await _httpClient.DeleteAsync("products/" + productId);
+        var response = await _httpClient.DeleteAsync("categories/" + productId);
         return response.IsSuccessStatusCode;
     }
 
@@ -50,7 +84,10 @@ public class CatalogService : ICatalogService
         if (!response.IsSuccessStatusCode)
             return null;
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CategoryViewModel>>>();
-
+        responseSuccess.Data.ForEach(x =>
+        {
+            x.PhotoStockUrl = _photoHelper.GetPhotoStockUrl(x.PhotoUrl);
+        });
         return responseSuccess.Data;
 
     }
@@ -122,17 +159,36 @@ public class CatalogService : ICatalogService
             _photoStockService.DeletePhoto(productUpdateInput.MainPhotoUrl);
             productUpdateInput.MainPhotoUrl = resultPhotoService.Url;
         }
-        foreach (var item in productUpdateInput.OtherPhotos)
+        List<string> otherPhotos = new();
+        if (productUpdateInput.OtherPhotos is not null)
         {
-            var resultOtherPhotoService = await _photoStockService.UploadPhoto(item);
-
-            if (resultOtherPhotoService != null)
+            foreach (var item in productUpdateInput.OtherPhotosUrl)
             {
-                _photoStockService.DeletePhoto(item.FileName);
-                productUpdateInput.OtherPhotosUrl.Add(resultOtherPhotoService.Url);
+                _photoStockService.DeletePhoto(item);
             }
+            int count = 0;
+            foreach (var item in productUpdateInput.OtherPhotos)
+            {
+                if (count > 3) { break; }
+                var resultOtherPhotoService = await _photoStockService.UploadPhoto(item);
+
+                if (resultOtherPhotoService != null)
+                {
+
+                    otherPhotos.Add(resultOtherPhotoService.Url);
+                }
+            }
+
+
+            productUpdateInput.OtherPhotosUrl = otherPhotos;
         }
         var response = await _httpClient.PutAsJsonAsync<ProductUpdateInput>("products", productUpdateInput);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> DeleteCategoryAsync(string id)
+    {
+        var response = await _httpClient.DeleteAsync("categories" + id);
         return response.IsSuccessStatusCode;
     }
 }

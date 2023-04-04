@@ -33,5 +33,17 @@ namespace MarketPlace.Catalog.Controllers
             var response = await _categoryService.CreateAsync(categoryDto);
             return CreateActionResult(response);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var response = await _categoryService.DeleteAsync(id);
+            return CreateActionResult(response);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(CategoryUpdateDto categoryUpdateDto)
+        {
+            var response = await _categoryService.UpdateAsync(categoryUpdateDto);
+            return CreateActionResult(response);
+        }
     }
 }

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "UpdateCategory";
+}
+
+@model CategoryUpdateInput
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Kurs güncelleme</h5>
+                <form asp-controller="Products" asp-action="UpdateCategory" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PhotoUrl" />
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Name">Product Name</label>
+                        <input class="form-control" asp-for="Name" />
+                        <span class="text-danger" asp-validation-for="Name" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Photo">Product Form</label>
+                        <input type="file" asp-for="Photo" />
+                        <span class="text-danger" asp-validation-for="Photo" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,4 +11,8 @@ public interface ICatalogService
     Task<bool> CreateProductAsync(ProductCreateInput productCreateInput);
     Task<bool> UpdateProductAsync(ProductUpdateInput productUpdateInput);
     Task<bool> DeleteProductAsync(string productId);
+    Task<bool> CreateCategoryAsync(CategoryCreateInput categoryCreateInput);
+    Task<CategoryViewModel> GetByIdCategory(string id);
+    Task<bool> UpdateCategoryAsync(CategoryUpdateInput categoryUpdateInput);
+    Task<bool> DeleteCategoryAsync(string id);
 }

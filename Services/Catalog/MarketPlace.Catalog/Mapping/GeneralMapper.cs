@@ -10,6 +10,7 @@ public class GeneralMapper : Profile
     {
         CreateMap<Product, ProductDto>().ReverseMap();
         CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Category, CategoryUpdateDto>().ReverseMap();
         CreateMap<Product, ProductUpdateDto>().ReverseMap();
         CreateMap<Product, ProductCreateDto>().ReverseMap();
     }

@@ -7,6 +7,8 @@ namespace MarketPlace.Catalog.Services
     {
         Task<Response<List<Models.Category>>> GetAllAsync();
         Task<Response<CategoryDto>> CreateAsync(CategoryDto categoryDto);
+        Task<Response<CategoryDto>> DeleteAsync(string id);
+        Task<Response<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto);
         Task<Response<CategoryDto>> GetByIdAsync(string id);
     }
 }

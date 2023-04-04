@@ -7,7 +7,6 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Kurs ekleme</h5>
-
                 <form asp-controller="Products" asp-action="Create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="mb-3">
@@ -17,7 +16,6 @@
                         </select>
                         <span class="text-danger" asp-validation-for="CategoryId" />
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label" asp-for="Name">Product Name</label>
                         <input class="form-control" asp-for="Name" />
@@ -33,8 +31,6 @@
                         <textarea asp-for="Description" class="form-control"></textarea>
                         <span class="text-danger" asp-validation-for="Description" />
                     </div>
-
-
                     <div class="mb-3">
                         <label class="form-label" asp-for="MainPhoto">Product Form</label>
                         <input type="file" asp-for="MainPhoto" />
@@ -45,8 +41,6 @@
                         <input type="file" multiple asp-for="OtherPhotos" />
                         <span class="text-danger" asp-validation-for="OtherPhotos" />
                     </div>
-
-
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>

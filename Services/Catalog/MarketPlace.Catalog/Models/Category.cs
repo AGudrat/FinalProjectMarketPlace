@@ -8,4 +8,5 @@ public class Category
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
     public string Name { get; set; }
+    public string PhotoUrl { get; set; }
 }

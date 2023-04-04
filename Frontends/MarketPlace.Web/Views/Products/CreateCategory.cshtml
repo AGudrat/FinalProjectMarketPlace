@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "CreateCategory";
+}
+@model CategoryCreateInput
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Kurs ekleme</h5>
+
+                <form asp-controller="Products" asp-action="CreateCategory" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Name">Product Name</label>
+                        <input class="form-control" asp-for="Name" />
+                        <span class="text-danger" asp-validation-for="Name" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Photo">Product Form</label>
+                        <input type="file" asp-for="Photo" />
+                        <span class="text-danger" asp-validation-for="Photo" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+                @if (ViewBag.categoryList != null)
+                {
+                    <table class="tabe table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Şəkil</th>
+                                <th>Category Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (CategoryViewModel item in ViewBag.categoryList)
+                            {
+                                <tr>
+                                    <td> <img style="width:72px" src="@item.PhotoStockUrl" class="img-thumbnail" /></td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <a asp-action="UpdateCategory" asp-controller="products" asp-route-id="@item.Id" class="btn btn-warning mb-3">Category Update</a>
+                                        <a asp-action="DeleteCategory" asp-controller="products" asp-route-id="@item.Id" class="btn btn-danger mb-3">Category Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-info">Product Not Foundc</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

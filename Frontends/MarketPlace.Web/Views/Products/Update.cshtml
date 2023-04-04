@@ -10,12 +10,13 @@
 
                 <form asp-controller="Products" asp-action="Update" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
-                    <input type="hidden" asp-for="Id"/>
+                    <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" />
                     <input type="hidden" asp-for="MainPhotoUrl" />
-                    <input type="hidden" multiple asp-for="OtherPhotosUrl" />
+
+
                     <div class="mb-3">
-                        <label  class="form-label" asp-for="CategoryId">Category Id</label>
+                        <label class="form-label" asp-for="CategoryId">Category Id</label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
                             <option value="">kategori seçiniz</option>
                         </select>
@@ -24,7 +25,7 @@
 
                     <div class="mb-3">
                         <label class="form-label" asp-for="Name">Product Name</label>
-                        <input class="form-control" asp-for="Name"/>
+                        <input class="form-control" asp-for="Name" />
                         <span class="text-danger" asp-validation-for="Name" />
                     </div>
                     <div class="mb-3">
@@ -34,7 +35,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="Description">Product Description</label>
-                        <textarea asp-for="Description" class="form-control" ></textarea>
+                        <textarea asp-for="Description" class="form-control"></textarea>
                         <span class="text-danger" asp-validation-for="Description" />
                     </div>
                     <div class="mb-3">

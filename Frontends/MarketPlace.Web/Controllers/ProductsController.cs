@@ -20,7 +20,8 @@ public class ProductsController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _catalogService.GetAllProductByUserIdAsync(_sharedIdentityService.GetUserId));
+        var response = await _catalogService.GetAllProductByUserIdAsync(_sharedIdentityService.GetUserId);
+        return View(response);
     }
 
     public async Task<IActionResult> Create()
@@ -79,5 +80,50 @@ public class ProductsController : Controller
     {
         await _catalogService.DeleteProductAsync(id);
         return RedirectToAction(nameof(Index));
+    }
+    public async Task<IActionResult> DeleteCategory(string id)
+    {
+        await _catalogService.DeleteProductAsync(id);
+        return RedirectToAction(nameof(CreateCategory));
+    }
+    public async Task<IActionResult> CreateCategory()
+    {
+        var categories = await _catalogService.GetAllCategoriesAsync();
+        ViewBag.categoryList = categories;
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCategory(CategoryCreateInput categoryCreateInput)
+    {
+        await _catalogService.CreateCategoryAsync(categoryCreateInput);
+        return RedirectToAction(nameof(CreateCategory));
+    }
+
+    public async Task<IActionResult> UpdateCategory(string id)
+    {
+        var category = await _catalogService.GetByIdCategory(id);
+
+        if (category is null)
+        {
+            return RedirectToAction(nameof(CreateCategory));
+        }
+
+        CategoryUpdateInput categoryUpdateInput = new CategoryUpdateInput()
+        {
+            Id = category.Id,
+            Name = category.Name,
+            PhotoUrl = category.PhotoUrl
+        };
+        return View(categoryUpdateInput);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCategory(CategoryUpdateInput categoryUpdateInput)
+    {
+        if (!ModelState.IsValid)
+            return View();
+        await _catalogService.UpdateCategoryAsync(categoryUpdateInput);
+        return RedirectToAction(nameof(CreateCategory));
     }
 }

@@ -42,5 +42,32 @@ namespace MarketPlace.Catalog.Services
                 return Response<CategoryDto>.Failed("Category Not Found", 404);
             return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200);
         }
+
+        public async Task<Response<CategoryDto>> DeleteAsync(string id)
+        {
+            var category = await GetByIdAsync(id);
+            if (category.Data is not null)
+            {
+                await _categoryCollection.DeleteOneAsync(x => x.Id == id);
+            }
+            else
+                return Response<CategoryDto>.Failed("Category not found", 404);
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category.Data), 200);
+        }
+
+        public async Task<Response<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto)
+        {
+            var updateCategory = _mapper.Map<Category>(categoryUpdateDto);
+
+            var category = await GetByIdAsync(updateCategory.Id);
+            if (category is not null)
+            {
+                var result = await _categoryCollection.FindOneAndReplaceAsync(x => x.Id == updateCategory.Id, updateCategory);
+            }
+            else
+                return Response<CategoryDto>.Failed("Category not found", 404);
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category.Data), 200);
+        }
+
     }
 }

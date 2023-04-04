@@ -29,7 +29,10 @@ namespace MarketPlace.Catalog.Services
         {
             var products = await _productCollection.Find(product => true).ToListAsync();
             if (products.Any())
-                foreach (var cource in products) { cource.Category = await _categoryCollection.Find<Category>(x => x.Id == cource.CategoryId).FirstAsync(); }
+                foreach (var cource in products)
+                {
+                    cource.Category = await _categoryCollection.Find<Category>(x => x.Id == cource.CategoryId).FirstAsync();
+                }
             else
                 products = new List<Product>();
 

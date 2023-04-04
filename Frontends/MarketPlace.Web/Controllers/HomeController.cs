@@ -19,12 +19,16 @@ namespace MarketPlace.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var productResponse = await _catalogService.GetAllProductsAsync();
+            var categoriesResponse = await _catalogService.GetAllCategoriesAsync();
 
-            return View(await _catalogService.GetAllProductsAsync());
+            return View((productResponse, categoriesResponse));
         }
         public async Task<IActionResult> Detail(string id)
         {
-            return View(await _catalogService.GetByProductIdAsync(id));
+            var products = await _catalogService.GetAllProductsAsync();
+            var selectedProduct = await _catalogService.GetByProductIdAsync(id);
+            return View((selectedProduct, products.Where(x => x.Category.Name == selectedProduct.Category.Name && x.Id != id).OrderByDescending(x => x.CreatedTime).Take(6).ToList()));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
