@@ -2,6 +2,7 @@
 using MarketPlace.Web.Helpers;
 using MarketPlace.Web.Services.Interfaces;
 using MarketPlace.Web.ViewModels.Catalog;
+using Nest;
 
 namespace MarketPlace.Web.Services;
 
@@ -10,12 +11,13 @@ public class CatalogService : ICatalogService
     private readonly HttpClient _httpClient;
     private readonly IPhotoStockService _photoStockService;
     private readonly PhotoHelper _photoHelper;
-
-    public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
+    private readonly IElasticClient _elasticClient;
+    public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper, IElasticClient elasticClient)
     {
         _httpClient = httpClient;
         _photoStockService = photoStockService;
         _photoHelper = photoHelper;
+        _elasticClient = elasticClient;
     }
 
     public async Task<bool> CreateCategoryAsync(CategoryCreateInput categoryCreateInput)

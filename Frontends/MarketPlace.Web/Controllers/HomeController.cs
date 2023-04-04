@@ -46,11 +46,12 @@ namespace MarketPlace.Web.Controllers
         {
             return View(await _catalogService.GetAllProductsAsync());
         }
+        [HttpPost]
+        public async Task<IActionResult> Search(string productName)
+        {
 
-        //[HttpPost]
-        //public async Task<IActionResult> Search(string )
-        //{
+            return View(await _catalogService.SearchProducts(productName));
+        }
 
-        //}
     }
 }
