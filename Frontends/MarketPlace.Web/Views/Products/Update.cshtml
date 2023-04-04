@@ -12,7 +12,8 @@
                     <div asp-validation-summary="ModelOnly"></div>
                     <input type="hidden" asp-for="Id"/>
                     <input type="hidden" asp-for="UserId" />
-                    <input type="hidden" asp-for="Picture" />
+                    <input type="hidden" asp-for="MainPhotoUrl" />
+                    <input type="hidden" multiple asp-for="OtherPhotosUrl" />
                     <div class="mb-3">
                         <label  class="form-label" asp-for="CategoryId">Category Id</label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
@@ -37,9 +38,14 @@
                         <span class="text-danger" asp-validation-for="Description" />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" asp-for="PhotoFormFile">Product Form</label>
-                        <input type="file" asp-for="PhotoFormFile" />
-                        <span class="text-danger" asp-validation-for="PhotoFormFile" />
+                        <label class="form-label" asp-for="MainPhoto">Product Form</label>
+                        <input type="file" asp-for="MainPhoto" />
+                        <span class="text-danger" asp-validation-for="MainPhoto" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="OtherPhotos">Product Form</label>
+                        <input type="file" multiple asp-for="OtherPhotos" />
+                        <span class="text-danger" asp-validation-for="OtherPhotos" />
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>

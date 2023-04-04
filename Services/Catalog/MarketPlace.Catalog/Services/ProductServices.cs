@@ -52,7 +52,10 @@ namespace MarketPlace.Catalog.Services
         {
             var products = await _productCollection.Find<Product>(x => x.UserId == userId).ToListAsync();
             if (products.Any())
-                foreach (var product in products) { product.Category = await _categoryCollection.Find<Category>(x => x.Id == product.CategoryId).FirstAsync(); }
+                foreach (var product in products)
+                {
+                    product.Category = await _categoryCollection.Find<Category>(x => x.Id == product.CategoryId).FirstAsync();
+                }
             else
                 products = new List<Product>();
 

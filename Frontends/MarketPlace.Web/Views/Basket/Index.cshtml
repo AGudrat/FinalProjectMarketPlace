@@ -81,7 +81,7 @@
                             <p>Amount of product</p>
                             <p>@Model.BasketItems.Count</p>
                         </div>
-                        <button class="btn btn-primary confirm__btn">Confirm</button>
+                        <a class="btn btn-primary confirm__btn" asp-action="Checkout" asp-controller="Order">Confirm</a>
 
                         <div class="description">
                             <h3>Still deciding?</h3>
@@ -104,74 +104,3 @@
      
     </div>
 </section>
-@*<div class="row">
-    <div class="col-md-8" offset-md-2>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Basket</h5>
-                @if(Model!=null && Model.BasketItems.Any())
-                {
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Price</th>
-                            <th>Product Count</th>
-                            <th>Actions</th>
-                        </tr>
-                        @foreach (var item in Model.BasketItems)
-                        {
-                            <tr>
-                                <td>@item.ProductName</td>
-                                <td>@item.GetCurrentPrice $ @(Model.HasDiscount ? $"({Model.DiscountRate.Value}$ applied)" : "")</td>
-                                <td>@item.Quantity</td>
-                                <td><a asp-controller="Basket" asp-action="RemoveBasketItem" asp-route-productId="@item.ProductId">Delete</a></td>
-                            </tr>
-                        }
-
-                        @if (Model.HasDiscount)
-                        {
-                            <tr>
-                                <td>Discount persent</td>
-                                <td colspan="2">% @Model.DiscountRate.Value</td>
-                            </tr>
-                        }
-                        <tr>
-                            <td>@(Model.HasDiscount ? "Discounted price" : "Price")</td>
-                            <td colspan="2">@Model.TotalPrice $ </td>
-                        </tr>
-                    </table>
-
-                    <form asp-controller="Basket" asp-action="ApplyDiscount">
-                        @if (Model.HasDiscount)
-                        {
-                            <div class="alert alert-success">
-                                @Model.DiscountCode discount code is applied
-                            </div>
-                            <a asp-controller="Basket" asp-action="CancelApplyDiscount">Cancel Discount</a>
-                        }
-
-                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
-                        {
-                            <div class="text-danger">Discount code is invalid</div>
-                        }
-                        <div class="input-group mb-3">
-                            <input type="text" name="DiscountApplyInput.Code" class="form-control" />
-                            <button class="btn btn-outline-secondary">Apply</button>
-
-                        </div>
-                        @if (TempData["discountError"] != null)
-                        {
-                            <div class="text-danger">@TempData["discountError"]</div>
-                        }
-                    </form>
-                    <a class="btn btn-success" asp-action="Checkout" asp-controller="Order">Payment Info</a>
-                    <a class="btn btn-warning" asp-action="Index" asp-controller="Home">Continue Shopping</a>
-                }
-                else
-                {
-                    <div class="alert alert-info">Basket in empty</div>
-                }
-            </div>
-        </div>
-    </div>
-</div>*@

@@ -13,7 +13,8 @@ public class Product
     [BsonRepresentation(BsonType.Decimal128)]
     public decimal Price { get; set; }
     public string UserId { get; set; }
-    public string Picture { get; set; }
+    public string MainPhotoUrl { get; set; }
+    public List<string> OtherPhotosUrl { get; set; }
 
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime CreatedTime { get; set; }

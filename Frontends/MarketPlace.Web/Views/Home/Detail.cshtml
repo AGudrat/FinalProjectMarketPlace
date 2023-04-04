@@ -12,22 +12,17 @@
                 </div>
                 <div class="product__images col-1">
                     <div class="flex-column">
+                            @foreach (var item in Model.OtherPhotosStockUrl)
+                            {
+                                
                         <div class="product__images__item__container">
-                            <img src="@Model.StockPictureUrl" class="product__images__item" />
+                            <img src="@item" class="product__images__item" />
                         </div>
-                        <div class="product__images__item__container">
-                            <img src="@Model.StockPictureUrl" class="product__images__item" />
-                        </div>
-                        <div class="product__images__item__container">
-                            <img src="@Model.StockPictureUrl" class="product__images__item" />
-                        </div>
-                        <div class="product__images__item__container">
-                            <img src="@Model.StockPictureUrl" class="product__images__item" />
-                        </div>
+                            }
                     </div>
                 </div>
                 <div class="product__detail__image__container col-4">
-                    <img src="@Model.StockPictureUrl" class="product__detail__image" />
+                    <img src="@Model.MainPhotoStockUrl" class="product__detail__image" />
                 </div>
                 <div class="col-6 d-flex flex-column">
                     <div class="product__detail__about">

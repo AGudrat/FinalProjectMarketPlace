@@ -20,11 +20,19 @@ public class CatalogService : ICatalogService
 
     public async Task<bool> CreateProductAsync(ProductCreateInput productCreateInput)
     {
-        var resultPhotoService = await _photoStockService.UploadPhoto(productCreateInput.PhotoFormFile);
-
-        if (resultPhotoService != null)
+        var mainPhotoUrl = await _photoStockService.UploadPhoto(productCreateInput.MainPhoto);
+        if (mainPhotoUrl != null)
         {
-            productCreateInput.Picture = resultPhotoService.Url;
+            productCreateInput.MainPhotoUrl = mainPhotoUrl.Url;
+        }
+
+        foreach (var item in productCreateInput.OtherPhotos)
+        {
+            var otherPhotoUrl = await _photoStockService.UploadPhoto(item);
+            if (otherPhotoUrl != null)
+            {
+                productCreateInput.OtherPhotosUrl.Add(otherPhotoUrl.Url);
+            }
         }
         var response = await _httpClient.PostAsJsonAsync<ProductCreateInput>("products", productCreateInput);
         return response.IsSuccessStatusCode;
@@ -53,10 +61,20 @@ public class CatalogService : ICatalogService
         if (!response.IsSuccessStatusCode)
             return null;
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<ProductViewModel>>>();
+
         responseSuccess.Data.ForEach(x =>
         {
-            x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
+            x.MainPhotoStockUrl = _photoHelper.GetPhotoStockUrl(x.MainPhotoUrl);
         });
+
+        responseSuccess.Data.ForEach(x =>
+        {
+            foreach (var item in x.OtherPhotosUrl)
+            {
+                x.OtherPhotosStockUrl.Add(_photoHelper.GetPhotoStockUrl(item));
+            }
+        });
+
         return responseSuccess.Data;
     }
 
@@ -68,7 +86,15 @@ public class CatalogService : ICatalogService
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<ProductViewModel>>>();
         responseSuccess.Data.ForEach(x =>
         {
-            x.StockPictureUrl = _photoHelper.GetPhotoStockUrl(x.Picture);
+            x.MainPhotoStockUrl = _photoHelper.GetPhotoStockUrl(x.MainPhotoUrl);
+        });
+
+        responseSuccess.Data.ForEach(x =>
+        {
+            foreach (var item in x.OtherPhotosUrl)
+            {
+                x.OtherPhotosStockUrl.Add(_photoHelper.GetPhotoStockUrl(item));
+            }
         });
         return responseSuccess.Data;
     }
@@ -79,18 +105,32 @@ public class CatalogService : ICatalogService
         if (!response.IsSuccessStatusCode)
             return null;
         var responseSuccess = await response.Content.ReadFromJsonAsync<Response<ProductViewModel>>();
-        responseSuccess.Data.StockPictureUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
+        responseSuccess.Data.MainPhotoStockUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.MainPhotoUrl);
+        foreach (var item in responseSuccess.Data.OtherPhotosUrl)
+        {
+            responseSuccess.Data.OtherPhotosStockUrl.Add(_photoHelper.GetPhotoStockUrl(item));
+        }
         return responseSuccess.Data;
     }
 
     public async Task<bool> UpdateProductAsync(ProductUpdateInput productUpdateInput)
     {
-        var resultPhotoService = await _photoStockService.UploadPhoto(productUpdateInput.PhotoFormFile);
+        var resultPhotoService = await _photoStockService.UploadPhoto(productUpdateInput.MainPhoto);
 
         if (resultPhotoService != null)
         {
-            _photoStockService.DeletePhoto(productUpdateInput.Picture);
-            productUpdateInput.Picture = resultPhotoService.Url;
+            _photoStockService.DeletePhoto(productUpdateInput.MainPhotoUrl);
+            productUpdateInput.MainPhotoUrl = resultPhotoService.Url;
+        }
+        foreach (var item in productUpdateInput.OtherPhotos)
+        {
+            var resultOtherPhotoService = await _photoStockService.UploadPhoto(item);
+
+            if (resultOtherPhotoService != null)
+            {
+                _photoStockService.DeletePhoto(item.FileName);
+                productUpdateInput.OtherPhotosUrl.Add(resultOtherPhotoService.Url);
+            }
         }
         var response = await _httpClient.PutAsJsonAsync<ProductUpdateInput>("products", productUpdateInput);
         return response.IsSuccessStatusCode;

@@ -8,10 +8,10 @@
             <div class="card-body">
                 <h5 class="card-title">Kurs ekleme</h5>
 
-                <form asp-controller="Products" asp-action="Create" method="post" enBctype="multipart/form-data">
+                <form asp-controller="Products" asp-action="Create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="mb-3">
-                        <label  class="form-label" asp-for="CategoryId">Category Id</label>
+                        <label class="form-label" asp-for="CategoryId">Category Id</label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
                             <option value="">kategori seçiniz</option>
                         </select>
@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label class="form-label" asp-for="Name">Product Name</label>
-                        <input class="form-control" asp-for="Name"/>
+                        <input class="form-control" asp-for="Name" />
                         <span class="text-danger" asp-validation-for="Name" />
                     </div>
                     <div class="mb-3">
@@ -30,14 +30,23 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="Description">Product Description</label>
-                        <textarea asp-for="Description" class="form-control" ></textarea>
+                        <textarea asp-for="Description" class="form-control"></textarea>
                         <span class="text-danger" asp-validation-for="Description" />
                     </div>
+
+
                     <div class="mb-3">
-                        <label class="form-label" asp-for="PhotoFormFile">Product Form</label>
-                        <input type="file" asp-for="PhotoFormFile" />
-                        <span class="text-danger" asp-validation-for="PhotoFormFile"/>
+                        <label class="form-label" asp-for="MainPhoto">Product Form</label>
+                        <input type="file" asp-for="MainPhoto" />
+                        <span class="text-danger" asp-validation-for="MainPhoto" />
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="OtherPhotos">Product Form</label>
+                        <input type="file" multiple asp-for="OtherPhotos" />
+                        <span class="text-danger" asp-validation-for="OtherPhotos" />
+                    </div>
+
+
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>

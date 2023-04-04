@@ -57,7 +57,8 @@ public class ProductsController : Controller
             Name = product.Name,
             CategoryId = product.CategoryId,
             Description = product.Description,
-            Picture = product.Picture,
+            MainPhotoUrl = product.MainPhotoUrl,
+            OtherPhotosUrl = product.OtherPhotosUrl,
             Price = product.Price,
             UserId = product.UserId,
         };
