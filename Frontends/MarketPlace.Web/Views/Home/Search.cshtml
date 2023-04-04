@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+@model List<ProductViewModel>
+
+<section class="search" id="search">
+    <div class="row">
+        <div class="col-2 categories">
+            <ul class="category__list">
+                <li class="category__list__item">Home</li>
+                <li class="category__list__item">Clothes</li>
+                <li class="category__list__item">Shoes</li>
+                <li class="category__list__item">Sports and leisure</li>
+                <li class="category__list__item">Auto products</li>
+                <li class="category__list__item">Laptop</li>
+                <li class="category__list__item">Music and Video</li>
+                <li class="category__list__item">Accessories</li>
+                <li class="category__list__item">For kids</li>
+                <li class="category__list__item">Home and garden</li>
+                <li class="category__list__item">Lighting</li>
+                <li class="category__list__item">Bag</li>
+            </ul>
+        </div>
+        <div class="col-10">
+            <div class="product__list">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-4 d-flex justify-content-center">
+                            <a asp-route-id="@item.Id" asp-action="Detail" asp-controller="Home" class="product__card">
+                                <div class="product__card__image__container">
+                                    <img src="@item.StockPictureUrl" class="product__card__image" />
+                                </div>
+                                <div class="product__card__body">
+                                    <h5 class="product__card__title">@item.Name</h5>
+                                    <h4 class="product__card__price">$@item.Price</h4>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

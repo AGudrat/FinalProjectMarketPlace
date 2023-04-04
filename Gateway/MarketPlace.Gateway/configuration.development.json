@@ -101,6 +101,23 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/services/signup/{everything}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamScheme": "https",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "catalog_fullpermission" ]
+      }
     }
   ],
 

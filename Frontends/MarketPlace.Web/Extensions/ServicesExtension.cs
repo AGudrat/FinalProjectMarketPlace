@@ -10,8 +10,11 @@ public static class servicesExtension
     public static void AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
     {
         var serviceApiSettings = configuration.GetSection("ServiceAPISettings").Get<ServiceAPISettings>();
-        services.AddHttpClient<IIdentitiyService, IdentityService>();
         services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+        services.AddHttpClient<IIdentitiyService, IdentityService>(opt =>
+        {
+            opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/services/signup/");
+        }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
         services.AddHttpClient<IBasketService, BasketService>(opt =>
         {
             opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}/");

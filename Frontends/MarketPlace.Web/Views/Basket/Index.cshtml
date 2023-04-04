@@ -2,8 +2,109 @@
     ViewData["Title"] = "Index";
 }
 @model BasketViewModel
+<section class="basket" id="basket">
+    <h5 class="basket__header">Basket</h5>
+    <div class="row">
+        @if (Model != null && Model.BasketItems.Any())
+        {
+            @foreach (var item in Model.BasketItems)
+            {
+                <div class="col-8">
+                    <div class="basket__item row">
+                        <div class="col-3">
+                            <div class="basket__item__image__container">
+                                <img src="@item.Picture" class="basket__item__image">
+                            </div>
+                        </div>
+                        <div class="col-5 basket__item__content">
+                            <h5>@item.ProductName</h5>
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 </p>
+                        </div>
+                        <div class="col-4">
+                            <div class="row product__price">
+                                <div class="col-7 row align-items-center">
+                                    <button class="btn col-4 p-0 m-0 product__price__quantity__minus ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                                        </svg>
+                                    </button>
+                                    <p class="d-flex col-2 p-0 m-0 d-flex justify-content-center">@item.Quantity</p>
+                                    <button class="btn col-4 product__price__quantity__plus">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="price col-5">
+                                    <p>$12.22</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 basket__item__remove">
+                            <a asp-controller="Basket" asp-action="RemoveBasketItem" asp-route-productId="@item.ProductId">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-4">
+                <div class="checkout">
+                    <div class="flex-column">
+                        <div class="price">
+                            <h3>$@Model.TotalPrice</h3>
+                            <p>Online time payment</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="discount">
+                            <form asp-controller="Basket" asp-action="ApplyDiscount">
+                                <div class="row justify-content-end">
+                                    <div class="col-2">
+                                        <button type="submit" class="btn btn-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="col-10"><input name="DiscountApplyInput.Code" class="form-control" /></div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="discount__cupon">
+                            <p>Coupon</p>
+                            <p>%@Model.DiscountRate</p>
+                        </div>
+                        <div class="amount">
+                            <p>Amount of product</p>
+                            <p>@Model.BasketItems.Count</p>
+                        </div>
+                        <button class="btn btn-primary confirm__btn">Confirm</button>
 
-<div class="row">
+                        <div class="description">
+                            <h3>Still deciding?</h3>
+                            <p>Add this item to a list and easily come back do it later.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="empty__basket">
+                    <h5>The basket is empty</h5>
+                    <p>Your basket will help you to buy several product at once!</p>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Add first product</a>
+                </div>
+            </div>
+        }
+     
+    </div>
+</section>
+@*<div class="row">
     <div class="col-md-8" offset-md-2>
         <div class="card">
             <div class="card-body">
@@ -56,7 +157,7 @@
                         <div class="input-group mb-3">
                             <input type="text" name="DiscountApplyInput.Code" class="form-control" />
                             <button class="btn btn-outline-secondary">Apply</button>
-                           
+
                         </div>
                         @if (TempData["discountError"] != null)
                         {
@@ -73,4 +174,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

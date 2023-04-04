@@ -172,4 +172,11 @@ public class IdentityService : IIdentitiyService
 
         return Response<bool>.Success(200);
     }
+    public async Task<Response<bool>> SignUp(SignUpInput signUpInput)
+    {
+        var response = await _httpClient.PostAsJsonAsync<SignUpInput>("signup", signUpInput);
+
+        return Response<bool>.Success(200);
+
+    }
 }

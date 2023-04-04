@@ -31,6 +31,8 @@ namespace MarketPlace.IdentityServer.Controllers
                 UserName = signupDto.Username,
                 Email = signupDto.Email,
                 City = signupDto.City,
+                LastName = signupDto.LastName,
+                FirsName = signupDto.FirstName
             };
             var result = await _userManager.CreateAsync(user, signupDto.Password);
             if (!result.Succeeded)

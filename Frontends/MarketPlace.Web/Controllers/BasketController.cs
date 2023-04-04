@@ -25,7 +25,7 @@ namespace MarketPlace.Web.Controllers
         public async Task<IActionResult> AddBasketItem(string id)
         {
             var product = await _catalogService.GetByProductIdAsync(id);
-            var basketItem = new BasketItemViewModel { ProductId = product.Id, ProductName = product.Name, Price = product.Price };
+            var basketItem = new BasketItemViewModel { ProductId = product.Id, ProductName = product.Name, Price = product.Price, Picture = product.StockPictureUrl };
             await _basketService.AddBasketItem(basketItem);
 
             return RedirectToAction(nameof(Index));

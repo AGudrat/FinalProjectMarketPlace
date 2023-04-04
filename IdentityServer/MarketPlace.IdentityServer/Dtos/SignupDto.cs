@@ -12,5 +12,9 @@ namespace MarketPlace.IdentityServer.Dtos
         public string Password { get; set; }
         [Required]
         public string City { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
     }
 }
