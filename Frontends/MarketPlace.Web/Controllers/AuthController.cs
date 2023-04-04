@@ -41,25 +41,6 @@ public class AuthController : Controller
     {
         return View();
     }
-    [HttpPost]
-    public async Task<IActionResult> SignUp(SignUpInput signUpInput)
-    {
-        if (!ModelState.IsValid)
-        {
-            return View();
-        }
-        var response = await _identitiyService.SignUp(signUpInput);
-        if (!response.IsSuccessful)
-        {
-            response.Errors.ForEach(error =>
-            {
-                ModelState.AddModelError(String.Empty, error);
-            });
-            return View();
-        }
-        return RedirectToAction(nameof(Index), "Home");
-
-    }
     public async Task<IActionResult> LogOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
