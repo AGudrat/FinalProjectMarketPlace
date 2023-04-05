@@ -15,6 +15,7 @@ builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
 builder.Services.Configure<ServiceAPISettings>(builder.Configuration.GetSection("ServiceAPISettings"));
 
+
 builder.Services.AddAccessTokenManagement();
 
 builder.Services.AddSingleton<PhotoHelper>();
@@ -33,6 +34,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 builder.Services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ProductCreateInputValidator>());
+builder.Services.AddElasticSearch(builder.Configuration);
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

@@ -4,15 +4,18 @@
 @model ProductCreateInput
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Kurs ekleme</h5>
+        <div class="product__create__form__card">
+            <div class="product__create__form__card__body">
+                <div class="row justify-content-between align-items-center mb-4">
+                    <h5 class="product__create__form__card__title mb-0 col-6">Category Create</h5>
+                    <a asp-action="CreateCategory" asp-controller="Products" class="btn btn-primary col-2">Add Category</a>
+                </div>
                 <form asp-controller="Products" asp-action="Create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="CategoryId">Category Id</label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
-                            <option value="">kategori seçiniz</option>
+                            <option value="">Choose Category</option>
                         </select>
                         <span class="text-danger" asp-validation-for="CategoryId" />
                     </div>
@@ -41,7 +44,7 @@
                         <input type="file" multiple asp-for="OtherPhotos" />
                         <span class="text-danger" asp-validation-for="OtherPhotos" />
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="w-100 mt-4 btn btn-primary">Create</button>
                 </form>
             </div>
         </div>

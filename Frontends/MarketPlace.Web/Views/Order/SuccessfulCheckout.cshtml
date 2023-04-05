@@ -3,8 +3,10 @@
     ViewData["Title"] = "SuccessfulCheckout";
 }
 
-<div class="alert alert-info">
-    <p>Order(Payment) completed successfully</p>
-    <p>Order(Payment) no @ViewBag.orderId</p>
+<div class="payment__complated__card  text-center alert-info">
+    <div class="alert alert-info">
+        <p>Order(Payment) completed successfully</p>
+        <p>Order(Payment) No: @ViewBag.orderId</p>
+    </div>
+    <a class="btn w-25 ml-auto mr-auto btn-primary" asp-action="Index" asp-controller="Home">Home page</a>
 </div>
-<a cite="btn btn-primary" asp-action="Index" asp-controller="Home">Home page</a>

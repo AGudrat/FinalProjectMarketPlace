@@ -1,17 +1,16 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Checkout";
 }
 @model CheckoutInfoInput
 <form asp-controller="Order" asp-action="Checkout" method="post">
     <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Adress Info</h5>
+        <div class="col-12 col-lg-8">
+            <div class="payment__card">
+                <div class="payment__card__body">
+                    <h5 class="payment__card__title">Adress Info</h5>
                     <div class="mb-3">
                         <label asp-for="Province" class="form-label"></label>
-                        <input asp-for="Province" class="form-control"/>
+                        <input asp-for="Province" class="form-control" />
                     </div>
                     <div class="mb-3">
                         <label asp-for="District" class="form-label"></label>
@@ -29,7 +28,7 @@
                         <label asp-for="Line" class="form-label"></label>
                         <input asp-for="Line" class="form-control" />
                     </div>
-                    <h5 class="card-title">Card Info</h5>
+                    <h5 class="payment__card__title mt-3">Card Info</h5>
 
                     <div class="mb-3">
                         <label asp-for="CardName" class="form-label"></label>
@@ -50,25 +49,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Payment Summary</h5>
+        <div class="col-12 col-lg-4">
+            <div class="payment__card">
+                <div class="payment__card__body">
+                    <h5 class="payment__card__title">Payment Summary</h5>
                     <table class="table table-striped">
                         @foreach (var item in ViewBag.basket.BasketItems as List<BasketItemViewModel>)
                         {
                             <tr>
-                                <td>@item.ProductName</td>
-                                <td>@item.Price</td>
+                                <td class="payment__card__title-text">@item.ProductName</td>
+                                <td class="payment__card__title-price">$@item.Price</td>
                             </tr>
                         }
 
-                        <td>
-                        <tr>@(ViewBag.basket.HasDiscount ? "Discounted Price: " : "Price")</tr>
-                        <tr>@(ViewBag.basket.TotalPrice) $</tr>
-                        </td>
+                        <tr>
+                            <td>@(ViewBag.basket.HasDiscount ? "Discounted Price: " : "Price")</td>
+                            <td>$@(ViewBag.basket.TotalPrice) </td>
+                        </tr>
                     </table>
-                    <button type="submit" class="btn btn-success">Complete the payment</button>
+                    <button type="submit" class="w-100 btn btn-success">Complete the payment</button>
                 </div>
             </div>
         </div>

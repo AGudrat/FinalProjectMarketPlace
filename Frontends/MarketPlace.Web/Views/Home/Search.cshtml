@@ -1,31 +1,33 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Search";
 }
-@model List<ProductViewModel>
+@model (List<ProductViewModel> Products, List<CategoryViewModel> Categories)
 
 <section class="search" id="search">
     <div class="row">
         <div class="col-2 categories">
             <ul class="category__list">
-                <li class="category__list__item">Home</li>
-                <li class="category__list__item">Clothes</li>
-                <li class="category__list__item">Shoes</li>
-                <li class="category__list__item">Sports and leisure</li>
-                <li class="category__list__item">Auto products</li>
-                <li class="category__list__item">Laptop</li>
-                <li class="category__list__item">Music and Video</li>
-                <li class="category__list__item">Accessories</li>
-                <li class="category__list__item">For kids</li>
-                <li class="category__list__item">Home and garden</li>
-                <li class="category__list__item">Lighting</li>
-                <li class="category__list__item">Bag</li>
+                @foreach (var item in Model.Categories)
+                {
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="@item.Name">@item.Name</a></li>
+               
+                }
+             @*   <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Shoes">Shoes</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Sports and leisure">Sports and leisure</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Auto products">Auto products</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Laptop">Laptop</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Music and Video">Music and Video</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Accessories">Accessories</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="For kids">For kids</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Home and garden">Home and garden</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Lighting">Lighting</a></li>
+                <li class="category__list__item"><a asp-action="Search" asp-controller="Home" asp-route-productName="Bag">Bag</a></li>*@
             </ul>
         </div>
         <div class="col-10">
             <div class="product__list">
                 <div class="row">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Products)
                     {
                         <div class="col-4 mb-4 d-flex justify-content-center">
                             <a asp-route-id="@item.Id" asp-action="Detail" asp-controller="Home" class="product__card">
