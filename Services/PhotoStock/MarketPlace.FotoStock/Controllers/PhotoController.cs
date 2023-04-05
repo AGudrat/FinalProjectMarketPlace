@@ -9,18 +9,28 @@ namespace MarketPlace.PhotoStock.Controllers
     [ApiController]
     public class PhotoController : CustomBaseController
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public PhotoController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
         [HttpPost]
         public async Task<IActionResult> PhotoPost(IFormFile photo, CancellationToken cancellationToken)
         {
             if (photo is not null && photo.Length > 0)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photo.FileName);
+                var photosPath = Path.Combine(_webHostEnvironment.WebRootPath, "photos");
+                if (!Directory.Exists(photosPath))
+                {
+                    Directory.CreateDirectory(photosPath);
+                }
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                var path = Path.Combine(photosPath, fileName);
 
-                using var stream = new FileStream(path, FileMode.Create);
+                using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 100);
                 await photo.CopyToAsync(stream, cancellationToken);
 
-
-                var returnPath = photo.FileName;
+                var returnPath = fileName;
 
                 PhotoDto photoDto = new()
                 {
